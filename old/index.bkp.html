@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izlazak? 💌</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e0 0%, #fde4ec 45%, #e9d5ff 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            color: #4a1d3a;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Lebdeća srca u pozadini */
+        .hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -40px;
+            font-size: 24px;
+            opacity: 0.6;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(25deg);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 460px;
+            padding: 32px 28px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(233, 30, 99, 0.18);
+            text-align: center;
+            animation: pop 0.45s cubic-bezier(.2, 1.4, .4, 1);
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            line-height: 1.15;
+            background: linear-gradient(90deg, #ff1f6b, #b83bdb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #e25b8a;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 800;
+            border-radius: 999px;
+            padding: 12px 28px;
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-yes {
+            background: linear-gradient(90deg, #ff4f8b, #ff1f6b);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(255, 31, 107, 0.35);
+        }
+
+        .btn-no {
+            background: #f1f3f8;
+            color: #555;
+            border: 2px solid #dde1ea;
+        }
+
+        .btn-no.running {
+            position: fixed;
+            z-index: 10;
+            transition: left 0.25s ease, top 0.25s ease;
+        }
+
+        .btn-next {
+            width: 100%;
+            margin-top: 22px;
+            background: linear-gradient(90deg, #10c98f, #0aa89e);
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(16, 201, 143, 0.3);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            min-height: 52px;
+        }
+
+        /* Kalendar */
+        .month {
+            font-weight: 700;
+            color: #e25b8a;
+            margin-bottom: 12px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .weekday {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #b83bdb;
+            padding-bottom: 4px;
+        }
+
+        .day {
+            aspect-ratio: 1.3;
+            border: none;
+            border-radius: 10px;
+            background: #fff0f5;
+            color: #d81b60;
+            font: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.15s;
+        }
+
+        .day:hover:not(:disabled) {
+            transform: scale(1.08);
+        }
+
+        .day:disabled {
+            background: #f1f1f4;
+            color: #bbb;
+            cursor: not-allowed;
+        }
+
+        .day.selected {
+            background: linear-gradient(135deg, #ff4f8b, #ff1f6b);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(255, 31, 107, 0.4);
+        }
+
+        .section-label {
+            margin: 20px 0 10px;
+            font-weight: 700;
+            color: #e25b8a;
+        }
+
+        .times {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .time {
+            border: none;
+            border-radius: 999px;
+            padding: 9px 18px;
+            background: #fff0f5;
+            color: #8e24aa;
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .time:hover {
+            transform: scale(1.06);
+        }
+
+        .time.selected {
+            background: linear-gradient(90deg, #c13cf0, #8e24aa);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(142, 36, 170, 0.35);
+        }
+
+        /* Hrana */
+        .foods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .food {
+            border: none;
+            border-radius: 16px;
+            padding: 16px 6px;
+            background: #fff;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+            font: inherit;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #b0174f;
+            cursor: pointer;
+            transition: transform 0.12s, background 0.15s;
+        }
+
+        .food span {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 6px;
+        }
+
+        .food:hover {
+            transform: translateY(-3px);
+        }
+
+        .food.selected {
+            background: linear-gradient(135deg, #ff4f8b, #ff1f6b);
+            color: #fff;
+        }
+
+        /* Rezime */
+        .summary {
+            text-align: left;
+            background: #fff5f9;
+            border-radius: 18px;
+            padding: 18px 20px;
+            margin: 18px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            font-weight: 700;
+        }
+
+        .summary-row + .summary-row {
+            border-top: 1px dashed #f5c2d6;
+        }
+
+        .summary-row .icon {
+            font-size: 1.3rem;
+        }
+
+        .screenshot-note {
+            margin-top: 6px;
+            padding: 14px;
+            border-radius: 16px;
+            background: linear-gradient(90deg, #ff4f8b, #b83bdb);
+            color: #fff;
+            font-weight: 800;
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.04);
+            }
+        }
+
+        .big-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+        }
+
+        /* Na touch ekranima hover efekti ostaju "zaglavljeni" posle tapa */
+        @media (hover: none) {
+            .btn:hover:not(:disabled),
+            .day:hover:not(:disabled),
+            .time:hover,
+            .food:hover {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .card {
+                padding: 24px 14px;
+                border-radius: 22px;
+            }
+
+            .big-emoji {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                margin-bottom: 18px;
+            }
+
+            .btn {
+                padding: 14px 26px;
+                font-size: 1rem;
+            }
+
+            .calendar {
+                gap: 4px;
+            }
+
+            .day {
+                aspect-ratio: 1;
+                min-height: 36px;
+                font-size: 0.8rem;
+                border-radius: 8px;
+            }
+
+            .section-label {
+                margin: 16px 0 8px;
+            }
+
+            .times {
+                gap: 8px;
+            }
+
+            .time {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+            }
+
+            .foods {
+                gap: 8px;
+            }
+
+            .food {
+                padding: 12px 4px;
+                font-size: 0.8rem;
+            }
+
+            .food span {
+                font-size: 1.7rem;
+            }
+
+            .btn-next {
+                margin-top: 18px;
+            }
+
+            .summary {
+                padding: 14px 16px;
+            }
+
+            .screenshot-note {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 340px) {
+            h1 {
+                font-size: 1.45rem;
+            }
+
+            .day {
+                min-height: 30px;
+                font-size: 0.72rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+
+    <main class="card">
+        <!-- Korak 1: pitanje -->
+        <section class="step active" id="step1">
+            <div class="big-emoji">🥺</div>
+            <h1>Hoćeš li da izađeš sa mnom?</h1>
+            <p class="subtitle">(Reci da, častim! 😇)</p>
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesBtn">DA! 😻</button>
+                <button class="btn btn-no" id="noBtn">Ne 😿</button>
+            </div>
+        </section>
+
+        <!-- Korak 2: datum i vreme -->
+        <section class="step" id="step2">
+            <h1>Kada idemo?</h1>
+            <p class="month">Oktobar 2026</p>
+            <div class="calendar" id="calendar"></div>
+            <p class="section-label">U koliko sati?</p>
+            <div class="times" id="times"></div>
+            <button class="btn btn-next" id="toFoodBtn" disabled>Zakucaj termin! 🔒</button>
+        </section>
+
+        <!-- Korak 3: hrana -->
+        <section class="step" id="step3">
+            <h1>Šta ćemo jesti?</h1>
+            <p class="subtitle">Biraj šta ti srce želi 🍽️</p>
+            <div class="foods" id="foods"></div>
+            <button class="btn btn-next" id="toSummaryBtn" disabled>Izaberi nešto 😋</button>
+        </section>
+
+        <!-- Korak 4: rezime -->
+        <section class="step" id="step4">
+            <div class="big-emoji">🥰</div>
+            <h1>Naš plan za izlazak! 💌</h1>
+            <div class="summary">
+                <div class="summary-row"><span class="icon">📅</span><span id="sumDate"></span></div>
+                <div class="summary-row"><span class="icon">⏰</span><span id="sumTime"></span></div>
+                <div class="summary-row"><span class="icon">🍽️</span><span id="sumFood"></span></div>
+            </div>
+            <p class="screenshot-note">📸 Uhvati skrinšot i pošalji mi rezultat! 💕</p>
+        </section>
+    </main>
+
+    <script>
+        const YEAR = 2026;
+        const MONTH = 9; // oktobar (0 = januar)
+        const WEEKDAYS = ['Po', 'Ut', 'Sr', 'Če', 'Pe', 'Su', 'Ne'];
+        const WEEKDAY_NAMES = ['nedelja', 'ponedeljak', 'utorak', 'sreda', 'četvrtak', 'petak', 'subota'];
+        const TIMES = ['17:00', '18:30', '19:00', '20:00', '21:00'];
+        const FOODS = [
+            { emoji: '🍕', name: 'Pica' },
+            { emoji: '🍣', name: 'Suši' },
+            { emoji: '🍔', name: 'Burgeri' },
+            { emoji: '🍝', name: 'Pasta' },
+            { emoji: '🥩', name: 'Roštilj' },
+            { emoji: '🍰', name: 'Slatkiši' },
+        ];
+
+        const state = { day: null, time: null, food: null };
+
+        function showStep(n) {
+            document.querySelectorAll('.step').forEach((s) => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            // ponovo pokreni "pop" animaciju kartice
+            const card = document.querySelector('.card');
+            card.style.animation = 'none';
+            void card.offsetWidth;
+            card.style.animation = '';
+        }
+
+        // ---------- Korak 1: dugme "Ne" beži ----------
+        const noBtn = document.getElementById('noBtn');
+
+        function runAway(e) {
+            if (e) {
+                e.preventDefault();
+            }
+            const rect = noBtn.getBoundingClientRect();
+            if (!noBtn.classList.contains('running')) {
+                // Kartica ima transform/backdrop-filter pa bi "fixed" bio relativan na nju
+                // i dugme bi odletelo van ekrana — zato ga selimo direktno u body.
+                noBtn.style.width = rect.width + 'px';
+                noBtn.style.left = rect.left + 'px';
+                noBtn.style.top = rect.top + 'px';
+                noBtn.classList.add('running');
+                document.body.appendChild(noBtn);
+            }
+            const yesRect = document.getElementById('yesBtn').getBoundingClientRect();
+            const vw = document.documentElement.clientWidth;
+            const vh = window.innerHeight;
+            const margin = 12;
+            const maxX = Math.max(margin, vw - rect.width - margin);
+            const maxY = Math.max(margin, vh - rect.height - margin);
+            const overlapsYes = (x, y) =>
+                x < yesRect.right + 10 && x + rect.width > yesRect.left - 10 &&
+                y < yesRect.bottom + 10 && y + rect.height > yesRect.top - 10;
+            let x;
+            let y;
+            let tries = 0;
+            // nova pozicija: dovoljno daleko od trenutne i ne preko dugmeta "DA"
+            do {
+                x = margin + Math.random() * (maxX - margin);
+                y = margin + Math.random() * (maxY - margin);
+                tries++;
+            } while (
+                (Math.hypot(x - rect.left, y - rect.top) < Math.min(150, vw / 3) || overlapsYes(x, y)) &&
+                tries < 100
+            );
+            requestAnimationFrame(() => {
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+            });
+        }
+
+        noBtn.addEventListener('mouseenter', runAway);
+        noBtn.addEventListener('pointerdown', runAway);
+        noBtn.addEventListener('touchstart', runAway, { passive: false });
+        noBtn.addEventListener('focus', runAway);
+        noBtn.addEventListener('click', runAway);
+
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            noBtn.style.display = 'none';
+            burstHearts();
+            showStep(2);
+        });
+
+        // ---------- Korak 2: kalendar i vreme ----------
+        const calendar = document.getElementById('calendar');
+        const toFoodBtn = document.getElementById('toFoodBtn');
+
+        function buildCalendar() {
+            WEEKDAYS.forEach((d) => {
+                const el = document.createElement('div');
+                el.className = 'weekday';
+                el.textContent = d;
+                calendar.appendChild(el);
+            });
+
+            const firstDay = new Date(YEAR, MONTH, 1).getDay();
+            const offset = (firstDay + 6) % 7; // nedelja ide na kraj nedelje
+            for (let i = 0; i < offset; i++) {
+                calendar.appendChild(document.createElement('div'));
+            }
+
+            const daysInMonth = new Date(YEAR, MONTH + 1, 0).getDate();
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const btn = document.createElement('button');
+                btn.className = 'day';
+                btn.textContent = d;
+                btn.disabled = new Date(YEAR, MONTH, d) < today;
+                btn.addEventListener('click', () => {
+                    calendar.querySelectorAll('.day').forEach((b) => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    state.day = d;
+                    updateDateButton();
+                });
+                calendar.appendChild(btn);
+            }
+        }
+
+        function buildTimes() {
+            const times = document.getElementById('times');
+            TIMES.forEach((t) => {
+                const btn = document.createElement('button');
+                btn.className = 'time';
+                btn.textContent = t;
+                btn.addEventListener('click', () => {
+                    times.querySelectorAll('.time').forEach((b) => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    state.time = t;
+                    updateDateButton();
+                });
+                times.appendChild(btn);
+            });
+        }
+
+        function updateDateButton() {
+            toFoodBtn.disabled = !(state.day && state.time);
+        }
+
+        toFoodBtn.addEventListener('click', () => showStep(3));
+
+        // ---------- Korak 3: hrana ----------
+        const toSummaryBtn = document.getElementById('toSummaryBtn');
+
+        function buildFoods() {
+            const foods = document.getElementById('foods');
+            FOODS.forEach((f) => {
+                const btn = document.createElement('button');
+                btn.className = 'food';
+                btn.innerHTML = `<span>${f.emoji}</span>${f.name}`;
+                btn.addEventListener('click', () => {
+                    foods.querySelectorAll('.food').forEach((b) => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    state.food = f;
+                    toSummaryBtn.disabled = false;
+                    toSummaryBtn.textContent = `Idemo na ${f.name.toLowerCase()}! ${f.emoji}`;
+                });
+                foods.appendChild(btn);
+            });
+        }
+
+        toSummaryBtn.addEventListener('click', () => {
+            const date = new Date(YEAR, MONTH, state.day);
+            document.getElementById('sumDate').textContent =
+                `${WEEKDAY_NAMES[date.getDay()]}, ${state.day}. oktobar ${YEAR}.`;
+            document.getElementById('sumTime').textContent = `${state.time} h`;
+            document.getElementById('sumFood').textContent = `${state.food.name} ${state.food.emoji}`;
+            burstHearts();
+            showStep(4);
+        });
+
+        // ---------- Srca ----------
+        const heartsEl = document.getElementById('hearts');
+        const HEART_EMOJIS = ['💖', '💕', '💗', '💘', '❤️', '🌸'];
+
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.textContent = HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = 16 + Math.random() * 22 + 'px';
+            h.style.animationDuration = 5 + Math.random() * 5 + 's';
+            heartsEl.appendChild(h);
+            h.addEventListener('animationend', () => h.remove());
+        }
+
+        function burstHearts() {
+            for (let i = 0; i < 25; i++) {
+                setTimeout(spawnHeart, i * 60);
+            }
+        }
+
+        buildCalendar();
+        buildTimes();
+        buildFoods();
+        setInterval(spawnHeart, 700);
+    </script>
+</body>
+</html>
