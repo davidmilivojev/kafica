@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Natalija, izlazak? 💌</title>
+    <title>Za Nataliju 💌</title>
     <style>
         * {
             box-sizing: border-box;
@@ -429,7 +429,7 @@
     </style>
 </head>
 <body>
-
+    <div class="hearts" id="hearts"></div>
     <main class="card">
         <!-- Korak 1: pitanje -->
         <section class="step active" id="step1">
@@ -648,7 +648,7 @@
 
         // ---------- Srca ----------
         const heartsEl = document.getElementById('hearts');
-        const HEART_EMOJIS = ['💖', '💕', '💗', '💘', '❤️', '🌸'];
+        const HEART_EMOJIS = ['🌸', '🌸', '💗', '🌸', '🌸', '🌸'];
 
         function spawnHeart() {
             const h = document.createElement('div');
