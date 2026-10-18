@@ -1,135 +1,606 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Auto — promena boje</title>
-<style>
-:root{--car:#f3f3f1}
-*{box-sizing:border-box}
-body{
-  margin:0;min-height:100svh;display:grid;place-items:center;
-  padding:12px;background:#101217;font-family:Arial,sans-serif;color:white
-}
-.app{width:min(900px,100%)}
-.scene{
-  position:relative;width:100%;aspect-ratio:1.45/1;overflow:hidden;
-  border-radius:24px;
-  background:linear-gradient(180deg,#dce5e9 0 68%,#eef2f3 68%);
-}
-/* ORIGINAL PNG — no filters, no generated face, no image manipulation */
-.driver{
-  position:absolute;z-index:2;
-  width:25%;left:47%;top:13%;
-  height:auto;object-fit:contain;
-  pointer-events:none;
-}
-.car{position:absolute;z-index:3;inset:0;color:var(--car)}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gossip Girl — Natalija</title>
 
-.windshield{
-  position:absolute;z-index:4;left:50%;top:19%;width:60%;height:31%;
-  background:linear-gradient(135deg,rgba(36,50,58,.45),rgba(8,17,24,.72));
-  clip-path:polygon(7% 100%,18% 13%,27% 5%,73% 5%,82% 13%,94% 100%);
-  pointer-events:none;
-  opacity: 0.2;
-  transform: translateX(-50%);
-}
-.body{
-  position:absolute;z-index:5;left:7%;right:5%;bottom:12%;height:47%;
-  background:var(--car);border:3px solid #151719;
-  border-radius:46% 43% 15% 15%/44% 44% 18% 18%;
-  box-shadow:inset 0 -22px 30px rgba(0,0,0,.15);
-}
-.hood{
-  position:absolute;z-index:6;left:21%;right:17%;bottom:43%;height:17%;
-  background:color-mix(in srgb,var(--car),white 5%);
-  clip-path:polygon(5% 0,95% 0,83% 100%,17% 100%);
-}
-.light{
-  position:absolute;z-index:8;bottom:39%;width:20%;height:8%;
-  background:#eef8fb;border:3px solid #121416
-}
-.light.l{left:12%;border-radius:65% 25% 55% 40%;transform:rotate(9deg)}
-.light.r{right:10%;border-radius:25% 65% 40% 55%;transform:rotate(-9deg)}
-.grille{
-  position:absolute;z-index:9;left:31%;bottom:22%;width:40%;height:19%;
-  border:4px solid #16181a;border-radius:45%;
-  background:radial-gradient(circle,#d8dde0 0 1.5px,#111 2px 5px);
-  background-size:10px 10px;overflow:hidden
-}
-.emblem{
-  position:absolute;z-index:10;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:20%;aspect-ratio:1;border:4px solid #dfe4e7;border-radius:50%;
-  background:#111;box-shadow:0 0 0 2px #111
-}
-.emblem:before,.emblem:after,.emblem span{
-  content:"";position:absolute;left:50%;top:50%;width:3px;height:42%;
-  background:#e5e8ea;transform-origin:50% 100%
-}
-.emblem:before{transform:translate(-50%,-100%) rotate(0)}
-.emblem:after{transform:translate(-50%,-100%) rotate(120deg)}
-.emblem span{transform:translate(-50%,-100%) rotate(240deg)}
-.intake{
-  position:absolute;z-index:9;bottom:20%;width:17%;height:13%;
-  background:#0b0d0f;border-radius:35% 55% 35% 55%
-}
-.intake.l{left:11%}.intake.r{right:9%;transform:scaleX(-1)}
-.wheel{
-  position:absolute;z-index:1;bottom:8%;width:18%;height:17%;
-  background:#090a0b;border-radius:50%
-}
-.wheel.l{left:12%}.wheel.r{right:9%}
-.controls{
-  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
-  padding:17px 5px 2px
-}
-.swatch{
-  width:48px;height:48px;border-radius:50%;border:3px solid #ffffff80;
-  background:var(--c);cursor:pointer
-}
-.swatch.active{outline:3px solid white;outline-offset:3px}
-@media(max-width:600px){
-  body{padding:0;background:#0e1014}
-  .app{width:100%}
-  .scene{height:76svh;min-height:480px;aspect-ratio:auto;border-radius:0}
-  .car{transform:scale(1.23);transform-origin:center 70%}
-  .driver{width:34%;left:43%;top:20%}
-  .controls{padding:18px 10px}
-  .swatch{width:44px;height:44px}
-}
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: Georgia, "Times New Roman", serif;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(212,175,55,.12), transparent 25%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,.06), transparent 25%),
+            #080808;
+        color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+    }
+
+    .background {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .floating {
+        position: absolute;
+        color: rgba(212,175,55,.12);
+        font-size: 28px;
+        animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+        from {
+            transform: translateY(110vh) rotate(0deg);
+        }
+        to {
+            transform: translateY(-20vh) rotate(360deg);
+        }
+    }
+
+    .card {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 620px;
+        background: rgba(15,15,15,.96);
+        border: 1px solid rgba(212,175,55,.45);
+        box-shadow:
+            0 0 40px rgba(0,0,0,.8),
+            0 0 80px rgba(212,175,55,.08);
+        padding: 38px;
+        border-radius: 4px;
+    }
+
+    .top-line {
+        text-align: center;
+        font-size: 11px;
+        letter-spacing: 4px;
+        color: #c9a84e;
+        margin-bottom: 12px;
+    }
+
+    .logo {
+        text-align: center;
+        font-size: clamp(42px, 10vw, 70px);
+        font-weight: bold;
+        letter-spacing: -3px;
+        line-height: .9;
+    }
+
+    .xoxo {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 15px;
+        letter-spacing: 7px;
+        color: #c9a84e;
+    }
+
+    .divider {
+        height: 1px;
+        background: linear-gradient(
+            to right,
+            transparent,
+            rgba(212,175,55,.7),
+            transparent
+        );
+        margin: 28px 0;
+    }
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #9d9d9d;
+        margin-bottom: 8px;
+    }
+
+    .progress {
+        width: 100%;
+        height: 3px;
+        background: #242424;
+        margin-bottom: 35px;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 20%;
+        background: #c9a84e;
+        transition: width .4s ease;
+    }
+
+    .question-number {
+        color: #c9a84e;
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 13px;
+    }
+
+    .question {
+        font-size: clamp(24px, 5vw, 32px);
+        line-height: 1.25;
+        margin-bottom: 28px;
+    }
+
+    .options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .option {
+        border: 1px solid #333;
+        background: #111;
+        color: #eee;
+        padding: 18px 20px;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        font-size: 16px;
+        transition: all .2s ease;
+        border-radius: 2px;
+    }
+
+    .option:hover {
+        border-color: #c9a84e;
+        background: #171717;
+        transform: translateX(4px);
+    }
+
+    .option.selected {
+        border-color: #c9a84e;
+        background: rgba(201,168,78,.12);
+        color: #fff;
+    }
+
+    .option:active {
+        transform: scale(.99);
+    }
+
+    .question-screen,
+    .result-screen {
+        animation: fadeIn .4s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .result-screen {
+        text-align: center;
+    }
+
+    .result-icon {
+        font-size: 52px;
+        margin-bottom: 15px;
+    }
+
+    .result-label {
+        color: #c9a84e;
+        letter-spacing: 5px;
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .result-title {
+        font-size: clamp(32px, 8vw, 50px);
+        margin-bottom: 12px;
+    }
+
+    .result-subtitle {
+        color: #bbb;
+        line-height: 1.6;
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .answers-summary {
+        text-align: left;
+        border-top: 1px solid #292929;
+        border-bottom: 1px solid #292929;
+        padding: 8px 0;
+        margin-bottom: 25px;
+    }
+
+    .answer-item {
+        padding: 14px 0;
+        border-bottom: 1px solid #202020;
+    }
+
+    .answer-item:last-child {
+        border-bottom: none;
+    }
+
+    .answer-question {
+        color: #888;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+    }
+
+    .answer-value {
+        color: #f2f2f2;
+        font-size: 15px;
+    }
+
+    .final-text {
+        color: #888;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 12px;
+            align-items: flex-start;
+            padding-top: 20px;
+        }
+
+        .card {
+            padding: 26px 18px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 48px;
+        }
+
+        .xoxo {
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+
+        .divider {
+            margin: 22px 0;
+        }
+
+        .progress {
+            margin-bottom: 28px;
+        }
+
+        .question {
+            font-size: 25px;
+            margin-bottom: 22px;
+        }
+
+        .option {
+            padding: 16px 15px;
+            font-size: 15px;
+        }
+    }
 </style>
 </head>
+
 <body>
-<div class="app">
-  <div class="scene">
-    <img class="driver" src="nat-original.png" alt="Vozač">
-    <div class="car" id="car">
-      <div class="wheel l"></div><div class="wheel r"></div>
-      <div class="roof"></div>
-      <div class="windshield"></div>
-      <div class="body"></div>
-      <div class="light l"></div><div class="light r"></div>
-      <div class="intake l"></div><div class="intake r"></div>
-      <div class="grille"><div class="emblem"><span></span></div></div>
+
+<div class="background" id="background"></div>
+
+<main class="card">
+
+    <header>
+        <div class="top-line">THE UPPER EAST SIDE</div>
+        <div class="logo">Gossip Girl</div>
+        <div class="xoxo">XOXO</div>
+    </header>
+
+    <div class="divider"></div>
+
+    <div id="quiz">
+
+        <div class="progress-info">
+            <span>CONFIDENTIAL</span>
+            <span id="progressText">01 / 05</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="question-screen">
+            <div class="question-number" id="questionNumber">
+                QUESTION 01
+            </div>
+
+            <h1 class="question" id="question"></h1>
+
+            <div class="options" id="options"></div>
+        </div>
+
     </div>
-  </div>
-  <div class="controls">
-    <button class="swatch active" data-color="#fe84ea" style="--c:#fe84ea" aria-label="Roze"></button>
-    <button class="swatch" data-color="#f3f3f1" style="--c:#f3f3f1" aria-label="Bela"></button>
-    <button class="swatch" data-color="#17365d" style="--c:#17365d" aria-label="Teget"></button>
-    <button class="swatch" data-color="#9e1018" style="--c:#9e1018" aria-label="Crvena"></button>
-    <button class="swatch" data-color="#74787c" style="--c:#74787c" aria-label="Siva"></button>
-  </div>
-</div>
+
+    <div id="result" class="result-screen hidden">
+
+        <div class="result-icon">💋</div>
+
+        <div class="result-label">SPOTTED</div>
+
+        <h1 class="result-title">Natalija has spoken.</h1>
+
+        <p class="result-subtitle">
+            Gossip Girl je pažljivo zabeležila sve odgovore...
+            I moram priznati — zanimljivo. 👀
+        </p>
+
+        <div class="answers-summary" id="answersSummary"></div>
+
+        <p class="final-text">
+            Secrets are safe with me... probably.<br>
+            You know you love me.<br><br>
+            XOXO, Gossip Girl 💋
+        </p>
+
+    </div>
+
+</main>
+
 <script>
-const car=document.getElementById('car');
-document.querySelectorAll('.swatch').forEach(btn=>{
- btn.addEventListener('click',()=>{
-   car.style.setProperty('--car',btn.dataset.color);
-   document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));
-   btn.classList.add('active');
- });
-});
+
+const questions = [
+
+    {
+        question: "Koji Gossip Girl lik ti je najbliži?",
+        options: [
+            "👑 Blair Waldorf — uvek imam plan",
+            "✨ Serena — idem gde me život odvede",
+            "🖤 Jenny — igram po svojim pravilima",
+            "😈 Georgina — bolje da ne znaš"
+        ]
+    },
+
+    {
+        question: "Kako izgleda tvoj idealan izlazak?",
+        options: [
+            "🥂 Večera i dobro vino",
+            "🍸 Kokteli i dobra muzika",
+            "🌃 Nešto spontano, bez mnogo planiranja",
+            "🌙 Mirnije mesto gde možemo stvarno da pričamo"
+        ]
+    },
+
+    {
+        question: "Kako znaš da neko vredi tvoje pažnje?",
+        options: [
+            "❤️ Po tome kako se ponaša prema meni",
+            "🤍 Po tome kakav je prema drugim ljudima",
+            "💰 Po tome koliko je ambiciozan",
+            "🧠 Po tome kako razmišlja"
+        ]
+    },
+
+    {
+        question: "Šta te najlakše osvoji kod nekoga?",
+        options: [
+            "😂 Dobar humor",
+            "🧠 Dobar razgovor",
+            "😏 Harizma i samopouzdanje",
+            "❤️ Pažnja i sitnice"
+        ]
+    },
+
+    {
+        question: "Da biraš samo jedno, šta bi izabrala?",
+        options: [
+            "💎 Luksuzan život",
+            "❤️ Mnogo pažnje i ljubavi",
+            "🤍 Mir i dobar partner",
+            "🚀 Uspeh i ostvareni ciljevi"
+        ]
+    }
+
+];
+
+let currentQuestion = 0;
+let answers = [];
+
+const questionElement =
+    document.getElementById("question");
+
+const optionsElement =
+    document.getElementById("options");
+
+const questionNumberElement =
+    document.getElementById("questionNumber");
+
+const progressTextElement =
+    document.getElementById("progressText");
+
+const progressBarElement =
+    document.getElementById("progressBar");
+
+
+function loadQuestion() {
+
+    const current = questions[currentQuestion];
+
+    questionNumberElement.textContent =
+        `QUESTION ${String(currentQuestion + 1).padStart(2, "0")}`;
+
+    progressTextElement.textContent =
+        `${String(currentQuestion + 1).padStart(2, "0")} / 05`;
+
+    progressBarElement.style.width =
+        `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+    questionElement.textContent =
+        current.question;
+
+    optionsElement.innerHTML = "";
+
+    current.options.forEach((option, index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "option";
+
+        button.textContent = option;
+
+        button.addEventListener("click", () => {
+
+            selectAnswer(
+                index,
+                option,
+                button
+            );
+
+        });
+
+        optionsElement.appendChild(button);
+
+    });
+}
+
+
+function selectAnswer(index, option, button) {
+
+    const allButtons =
+        document.querySelectorAll(".option");
+
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+    });
+
+    button.classList.add("selected");
+
+    answers[currentQuestion] = option;
+
+    setTimeout(() => {
+
+        if (currentQuestion < questions.length - 1) {
+
+            currentQuestion++;
+
+            loadQuestion();
+
+        } else {
+
+            showResult();
+
+        }
+
+    }, 550);
+}
+
+
+function showResult() {
+
+    document
+        .getElementById("quiz")
+        .classList.add("hidden");
+
+    document
+        .getElementById("result")
+        .classList.remove("hidden");
+
+    createResult();
+}
+
+
+function createResult() {
+
+    const summary =
+        document.getElementById("answersSummary");
+
+    summary.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "answer-item";
+
+        item.innerHTML = `
+            <div class="answer-question">
+                ${String(index + 1).padStart(2, "0")} —
+                ${question.question}
+            </div>
+
+            <div class="answer-value">
+                ${answers[index]}
+            </div>
+        `;
+
+        summary.appendChild(item);
+
+    });
+}
+
+
+function createFloatingElements() {
+
+    const background =
+        document.getElementById("background");
+
+    const symbols = [
+        "XOXO",
+        "💋",
+        "♛",
+        "X",
+        "♡"
+    ];
+
+    for (let i = 0; i < 18; i++) {
+
+        const element =
+            document.createElement("div");
+
+        element.className = "floating";
+
+        element.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() * symbols.length
+                )
+            ];
+
+        element.style.left =
+            Math.random() * 100 + "%";
+
+        element.style.animationDuration =
+            (7 + Math.random() * 8) + "s";
+
+        element.style.animationDelay =
+            Math.random() * 8 + "s";
+
+        element.style.fontSize =
+            (12 + Math.random() * 20) + "px";
+
+        background.appendChild(element);
+
+    }
+}
+
+
+createFloatingElements();
+
+loadQuestion();
+
 </script>
+
 </body>
 </html>
