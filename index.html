@@ -1,47 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Shopping Mission 🛍️</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cocktail Crush</title>
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f7e9ef;color:#261d24;min-height:100svh;display:flex;justify-content:center}.app{width:min(100%,430px);min-height:100svh;background:linear-gradient(#fff7fa,#f7e9ef);position:relative;overflow:hidden;padding-bottom:92px}.top{position:absolute;z-index:5;top:0;left:0;right:0;padding:14px 14px 8px;background:linear-gradient(#fff 10%,rgba(255,255,255,.88),transparent)}.brand{display:flex;align-items:center;justify-content:space-between;font-weight:900}.brand span:first-child{font-size:20px}.money{background:#221b20;color:white;padding:8px 11px;border-radius:18px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.stat{background:#fff;border:1px solid #f1d8e2;border-radius:15px;padding:8px 10px;box-shadow:0 7px 20px #c37b9820}.stat b{display:flex;justify-content:space-between;font-size:12px}.bar{height:7px;background:#f2e6eb;border-radius:9px;overflow:hidden;margin-top:6px}.fill{height:100%;background:linear-gradient(90deg,#ec72a3,#f5b4c9);width:35%;transition:.35s}.hero{height:54svh;min-height:420px;position:relative;background:#171216}.hero img{width:100%;height:100%;object-fit:cover;object-position:center -10%}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 52%,#fff7fa 99%)}.plumbob{position:absolute;z-index:3;top:120px;left:50%;transform:translateX(-50%) rotate(45deg);width:26px;height:38px;background:linear-gradient(135deg,#91ffbd,#16b966);border-radius:5px;box-shadow:0 0 18px #4cff93}.bubble{position:absolute;z-index:4;left:18px;right:18px;bottom:26px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);padding:13px 15px;border-radius:20px;box-shadow:0 10px 30px #0002;font-size:14px;line-height:1.35}.bubble b{display:block;margin-bottom:3px}.panel{position:relative;z-index:4;margin-top:-8px;padding:0 14px}.title{font-size:22px;font-weight:950;margin:8px 2px 3px}.sub{font-size:13px;color:#765e6a;margin:0 2px 12px}.shops{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.shop{position:relative;z-index:8;pointer-events:auto;touch-action:manipulation;cursor:pointer;border:0;background:#fff;border-radius:18px;padding:14px 7px;box-shadow:0 8px 25px #a55c7a18;font-weight:800;color:#352630;min-height:82px}.shop .ico{font-size:25px;display:block;margin-bottom:5px}.shop small{display:block;color:#a06f83;font-weight:700;margin-top:2px}.shop:active{transform:scale(.97)}.bag{margin-top:13px;background:#2a2026;color:#fff;border-radius:20px;padding:13px}.bagtop{display:flex;justify-content:space-between;font-weight:900;font-size:13px}.items{display:flex;gap:7px;overflow:auto;padding-top:9px;min-height:44px}.item{white-space:nowrap;background:#fff1f6;color:#432a35;padding:7px 9px;border-radius:12px;font-size:12px;font-weight:800}.empty{opacity:.65;font-size:12px}.modal{position:fixed;z-index:20;inset:0;background:#21161cc9;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.card{width:min(100%,430px);background:#fff;border-radius:28px 28px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease}.card h2{margin:0 0 5px}.card p{margin:0 0 14px;color:#755f69}.choices{display:grid;gap:9px}.choice{border:1px solid #efd9e2;background:#fff7fa;border-radius:16px;padding:13px;text-align:left;font-weight:850;color:#35252d}.choice span{float:right;color:#b94d78}.close{width:100%;margin-top:10px;border:0;background:none;padding:10px;color:#92717f;font-weight:800}.toast{position:fixed;z-index:30;top:42%;left:50%;transform:translate(-50%,-50%) scale(.8);background:#231a20;color:white;padding:12px 18px;border-radius:20px;font-size:20px;font-weight:950;opacity:0;pointer-events:none}.toast.go{animation:pop .9s ease}.final{display:none;position:fixed;z-index:40;inset:0;background:linear-gradient(160deg,#251a21,#8f4967);color:white;padding:35px 22px;align-items:center;justify-content:center;text-align:center}.final.show{display:flex}.finalbox{max-width:360px}.final h1{font-size:34px;margin:0 0 10px}.final .score{font-size:64px;font-weight:950}.final button{border:0;border-radius:18px;padding:14px 20px;font-weight:900;margin-top:15px}.finish{position:fixed;z-index:10;bottom:12px;left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),402px);border:0;border-radius:19px;padding:15px;background:#e36c9b;color:#fff;font-weight:950;box-shadow:0 12px 30px #b9507b55}@keyframes up{from{transform:translateY(100%)}to{transform:none}}@keyframes pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}70%{opacity:1}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
+:root{--bg:#070a20;--card:#121735;--pink:#ff4fa3;--violet:#a866ff;--muted:#bfc2dc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#402150,#11132e 42%,#060817);color:#fff;font-family:Arial,sans-serif}
+button{font:inherit}.app{width:min(100%,480px);margin:auto;min-height:100vh;padding:18px 14px 32px}
+header{text-align:center}h1{font-family:Georgia,serif;color:#ffc4e4;margin:5px 0}.sub{color:#f0a9d1;font-family:cursive;font-size:18px}
+.stats{display:flex;gap:7px;margin:15px 0}.stat{flex:1;background:#111735;border:1px solid #67518d;border-radius:15px;padding:8px;text-align:center;font-size:11px}.stat b{display:block;color:#ff91c9;font-size:17px;margin-top:3px}
+.drinks{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.drink{background:#151a3a;border:1px solid #64518a;color:#fff;border-radius:17px;padding:10px 4px;cursor:pointer}.drink.active{border:2px solid var(--pink);background:#292044}.drink span{font-size:29px;display:block}.drink small{display:block;color:#bfc2dc;font-size:9px;margin-top:3px}
+.game{margin-top:12px;background:#0e1330;border:1px solid #65518d;border-radius:24px;padding:14px;overflow:hidden}.scene{height:260px;display:flex;align-items:flex-end;justify-content:center;position:relative}
+.glass{position:relative;width:120px;height:180px;border:4px solid #e9eaff;border-top-width:3px;border-radius:12px 12px 32px 32px;overflow:hidden;background:#fff1;box-shadow:0 0 30px #ff4fa333}
+.liquid{position:absolute;bottom:0;left:0;right:0;height:10%;background:linear-gradient(#dff5bd,#6cc66a);transition:height .45s,background .4s}.liquid:after{content:"";position:absolute;top:-5px;left:0;right:0;height:9px;background:#ffffff55;border-radius:50%}
+.ice{position:absolute;bottom:55px;left:12px;font-size:23px;letter-spacing:6px;z-index:2;opacity:0;transition:.3s}.garnish{position:absolute;right:-18px;top:0;font-size:42px;z-index:5}.straw{position:absolute;width:6px;height:145px;background:#ff70b5;right:27px;top:-32px;transform:rotate(8deg);border-radius:10px;z-index:1}
+.pour{position:absolute;width:9px;height:0;background:#ffca70;left:50%;top:0;border-radius:10px;opacity:0}.pour.go{animation:pour .7s ease}@keyframes pour{0%{height:0;opacity:1}50%{height:150px;opacity:1}100%{height:180px;opacity:0}}
+.float{position:absolute;bottom:10px;animation:fly 1.3s ease-out forwards}@keyframes fly{to{transform:translateY(-240px) rotate(80deg);opacity:0}}
+.msg{text-align:center;color:#ffd0e7;font-weight:bold;min-height:42px;padding:8px}.step{text-align:center;color:#9fa4c9;font-size:11px;margin-bottom:8px}
+.ingredients{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.ing{min-height:72px;border:1px solid #474b72;background:#171d3e;color:#fff;border-radius:13px;padding:7px 3px;cursor:pointer}.ing.selected{border:2px solid var(--pink);background:#292044}.ing span{font-size:25px;display:block}.ing small{display:block;color:#adb1cc;font-size:9px;margin-top:3px}
+.actions{display:flex;gap:8px;margin-top:11px}.actions button{flex:1;border:0;border-radius:14px;padding:13px 7px;color:#fff;font-weight:bold;cursor:pointer}.reset{background:#292e51}.mix{background:linear-gradient(90deg,#ff3f98,#a85fff)}
+.result{display:none;text-align:center;margin-top:12px;border:1px solid #ff68b1;background:#171a3a;border-radius:18px;padding:14px}.result.show{display:block}.stars{font-size:25px}.result h3{margin:7px}.recipe{color:#bfc2dc;font-size:11px;line-height:1.5}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div class="brand"><span>SHOPPING MISSION 🛍️</span><span class="money" id="money">€500</span></div><div class="stats"><div class="stat"><b><span>💗 Mood</span><span id="moodN">35%</span></b><div class="bar"><div class="fill" id="mood"></div></div></div><div class="stat"><b><span>✨ Style match</span><span id="styleN">20%</span></b><div class="bar"><div class="fill" id="style" style="width:20%"></div></div></div></div></div>
-  <section class="hero"><img src="sims_girl.png" alt="Shopping character"><div class="bubble" id="bubble"><b>Shopping challenge</b>„Imaš €500. Da vidimo koliko dobro biraš.”</div></section>
-  <main class="panel"><div class="title">Gde prvo idemo?</div><p class="sub">Klikni prodavnicu, izaberi stvar i napravi najbolji shopping haul.</p><div class="shops">
-    <button type="button" class="shop" onclick="openShop('outfit')"><span class="ico">👗</span>OUTFIT<small>€45–120</small></button>
-    <button type="button" class="shop" onclick="openShop('bag')"><span class="ico">👜</span>TORBE<small>€60–160</small></button>
-    <button type="button" class="shop" onclick="openShop('shoes')"><span class="ico">👠</span>CIPELE<small>€55–140</small></button>
-    <button type="button" class="shop" onclick="openShop('beauty')"><span class="ico">💄</span>BEAUTY<small>€25–80</small></button>
-    <button type="button" class="shop" onclick="openShop('coffee')"><span class="ico">☕</span>PAUZA<small>€15–30</small></button>
-    <button type="button" class="shop" onclick="openShop('mystery')"><span class="ico">🎁</span>MYSTERY<small>???</small></button>
-  </div><div class="bag"><div class="bagtop"><span>SHOPPING BAG</span><span id="count">0 stvari</span></div><div class="items" id="items"><span class="empty">Još je prazna…</span></div></div></main>
-  <button class="finish" onclick="finishGame()">ZAVRŠI SHOPPING →</button>
+<header><h1>🍸 COCKTAIL CRUSH</h1><div class="sub">Napravi svoj omiljeni koktel ♡</div></header>
+<div class="stats"><div class="stat">UKUS<b id="taste">0%</b></div><div class="stat">STYLE<b id="style">0%</b></div><div class="stat">HEMIJA<b id="chem">50%</b></div></div>
+<div class="drinks">
+<button class="drink active" data-d="mojito"><span>🌿</span>Mojito<small>fresh & cool</small></button>
+<button class="drink" data-d="devil"><span>😈</span>Devil Iced Tea<small>dangerously good</small></button>
+<button class="drink" data-d="maitai"><span>🌺</span>Mai Tai<small>tropical mood</small></button>
 </div>
-<div class="modal" id="modal"><div class="card"><h2 id="modalTitle"></h2><p id="modalText"></p><div class="choices" id="choices"></div><button class="close" onclick="closeModal()">Nastavi da razgledamo</button></div></div>
-<div class="toast" id="toast"></div>
-<div class="final" id="final"><div class="finalbox"><div>SHOPPING COMPLETE</div><h1 id="finalTitle">Perfect haul 🛍️</h1><div class="score" id="score">87%</div><p id="finalText"></p><button onclick="location.reload()">IGRAJ PONOVO</button></div></div>
+<div class="game">
+<div class="scene"><div id="pour" class="pour"></div><div class="glass"><div class="straw"></div><div id="liquid" class="liquid"></div><div id="ice" class="ice">🧊🧊</div><div id="garnish" class="garnish">🌿</div></div><div id="fx"></div></div>
+<div id="msg" class="msg">Mojito izabran. Dodaj sastojke 👇</div>
+<div id="step" class="step">0 / 5 sastojaka</div>
+<div id="ingredients" class="ingredients"></div>
+<div class="actions"><button class="reset" id="reset">↻ ISPOČETKA</button><button class="mix" id="mix">SHAKE / MIX ✨</button></div>
+</div>
+<div id="result" class="result"><div id="stars" class="stars"></div><h3 id="resultTitle"></h3><div id="resultText"></div><div id="recipe" class="recipe"></div></div>
+</div>
 <script>
-let money=500,mood=35,style=20,cart=[];
-const data={
-outfit:{title:'👗 Outfit challenge',text:'Koji outfit ide u kabinu?',opts:[['Pink power look',95,12,15,'👗 Pink power suit'],['Little black dress',120,8,18,'🖤 Black dress'],['Oversized hoodie',55,-4,3,'🧥 Hoodie']]},
-bag:{title:'👜 Bag hunt',text:'Jedna torba mora da ide kući. Koja?',opts:[['Pink statement bag',145,15,14,'👜 Pink bag'],['Minimal black bag',110,7,16,'👜 Black bag'],['Mini bag — nepraktična ali top',75,11,9,'👛 Mini bag']]},
-shoes:{title:'👠 Shoe test',text:'Šta uzimamo bez razmišljanja?',opts:[['Elegantne štikle',135,13,17,'👠 Heels'],['Clean sneakers',85,8,12,'👟 Sneakers'],['„Uzmi oba para”',140,18,14,'✨ Shoe combo']]},
-beauty:{title:'💄 Beauty corner',text:'Mali detalj koji menja ceo look?',opts:[['Nude lipstick',35,8,9,'💄 Nude lipstick'],['Parfem',80,13,8,'🌸 Perfume'],['Glow kit',55,10,12,'✨ Glow kit']]},
-coffee:{title:'☕ Shopping break',text:'Energija pada. Šta naručujemo?',opts:[['Iced latte + cake',24,12,2,'☕ Coffee break'],['Matcha',18,7,4,'🍵 Matcha'],['Preskačemo — još radnji!',0,-6,1,'🏃 Speed shopping']]},
-mystery:{title:'🎁 Mystery box',text:'Ne znaš šta je unutra. Rizikuješ €70?',opts:[['Otvaraj!',70,20,18,'🎁 Mystery gift'],['Ne rizikujem',0,-2,0,'🪙 Saved money'],['Ti biraj iznenađenje',55,14,10,'💝 Surprise']]}
+const D={
+mojito:{name:"Mojito",g:"🌿",c:["#dff5bd","#6cc66a"],right:["Beli rum","Limeta","Nana","Soda","Led"],items:[["🥃","Beli rum"],["🍋","Limeta"],["🌿","Nana"],["💧","Soda"],["🧊","Led"],["🍓","Jagoda"],["🥤","Cola"],["🍊","Narandža"],["🍒","Višnja"]]},
+devil:{name:"Devil Iced Tea",g:"😈",c:["#f06b72","#7b1932"],right:["Vodka","Rum","Limun","Cola","Led"],items:[["🍸","Vodka"],["🥃","Rum"],["🍋","Limun"],["🥤","Cola"],["🧊","Led"],["🌶️","Chili"],["🍓","Jagoda"],["🌿","Nana"],["🍊","Narandža"]]},
+maitai:{name:"Mai Tai",g:"🌺",c:["#ffc15d","#e75a4f"],right:["Rum","Limeta","Narandža","Sirup","Led"],items:[["🥃","Rum"],["🍋","Limeta"],["🍊","Narandža"],["🍯","Sirup"],["🧊","Led"],["🍍","Ananas"],["🥤","Cola"],["🌿","Nana"],["🍒","Višnja"]]}
 };
-
-function openShop(k){let d=data[k];if(!d){toast('Greška — probaj ponovo');return;}document.getElementById('modalTitle').textContent=d.title;document.getElementById('modalText').textContent=d.text;let c=document.getElementById('choices');c.innerHTML='';d.opts.forEach(o=>{let b=document.createElement('button');b.className='choice';b.innerHTML=o[0]+' <span>€'+o[1]+'</span>';b.setAttribute('type','button');b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();buy(o);});c.appendChild(b)});document.getElementById('modal').classList.add('show')}
-function buy(o){if(o[1]>money){toast('Nema dovoljno € 😅');return}money-=o[1];mood=Math.max(0,Math.min(100,mood+o[2]));style=Math.max(0,Math.min(100,style+o[3]));cart.push(o[4]);document.getElementById('bubble').innerHTML='<b>'+reaction(o[2])+'</b>'+(['Ovo ide u kesu.','Dobro biraš… nastavi.','Okej, ovo nisam očekivala 👀','Shopping postaje ozbiljan.'][Math.floor(Math.random()*4)]);update();closeModal();toast((o[2]>=10?'+':'')+o[2]+' 💗')}
-function reaction(v){return v>=15?'Obožavam! 💕':v>=8?'Dobar izbor ✨':v>0?'Može 😌':'Hmm… 🙄'}
-function update(){let moneyEl=document.getElementById('money');moneyEl.textContent='€'+money;document.getElementById('mood').style.width=mood+'%';document.getElementById('style').style.width=style+'%';document.getElementById('moodN').textContent=mood+'%';document.getElementById('styleN').textContent=style+'%';document.getElementById('count').textContent=cart.length+' stvari';document.getElementById('items').innerHTML=cart.length?cart.map(x=>'<span class="item">'+x+'</span>').join(''):'<span class="empty">Još je prazna…</span>'}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.remove('go');void x.offsetWidth;x.classList.add('go')}
-function finishGame(){let total=Math.round((mood+style)/2);document.getElementById('score').textContent=total+'%';let title,text;if(cart.length<2){title='Prebrzo si odustala 😄';text='Shopping bag je skoro prazna. Sledeći put moraš ozbiljnije.'}else if(total>=80){title='ICONIC HAUL 💖';text='Pogodila si stil, mood i još ti je ostalo €'+money+'. Sledeći level: ko nosi sve ove kese? 😏'}else if(total>=60){title='Approved ✨';text='Vrlo dobar shopping. Par izbora je bilo rizično, ali prošla si test.'}else{title='Treba ti shopping trening 😅';text='Hemija postoji, ali modni radar traži još jednu rundu.'}document.getElementById('finalTitle').textContent=title;document.getElementById('finalText').textContent=text;document.getElementById('final').classList.add('show')}
+let current="mojito",chosen=[];
+const $=x=>document.getElementById(x);
+function render(){
+ const d=D[current]; $("garnish").textContent=d.g;$("liquid").style.background=`linear-gradient(${d.c[0]},${d.c[1]})`;
+ $("ingredients").innerHTML=d.items.map((x,i)=>`<button class="ing" data-i="${i}"><span>${x[0]}</span>${x[1]}<small>dodaj u čašu</small></button>`).join("");
+ document.querySelectorAll(".ing").forEach(b=>b.onclick=()=>add(+b.dataset.i,b));$("step").textContent=`${chosen.length} / 5 sastojaka`;
+}
+function add(i,b){
+ const x=D[current].items[i]; if(chosen.includes(x[1]))return;if(chosen.length>=5){say("Čaša je puna — vreme je za MIX! 🍹");return}
+ chosen.push(x[1]);b.classList.add("selected");$("liquid").style.height=(10+chosen.length*15)+"%";$("step").textContent=`${chosen.length} / 5 sastojaka`;
+ $("pour").classList.remove("go");void $("pour").offsetWidth;$("pour").classList.add("go");if(x[1]=="Led")$("ice").style.opacity=1;pop(x[0]);say(`${x[0]} ${x[1]} — sipamo!`);
+}
+function mix(){
+ if(chosen.length<3){say("Dodaj bar 3 sastojka pre miksovanja 😏");return}
+ const r=D[current].right,h=chosen.filter(x=>r.includes(x)).length,t=Math.round(h/r.length*100),s=Math.min(100,55+chosen.length*8),c=Math.min(100,50+h*9);
+ $("taste").textContent=t+"%";$("style").textContent=s+"%";$("chem").textContent=c+"%";
+ $("stars").textContent="⭐".repeat(t>=90?5:t>=70?4:t>=50?3:2);
+ $("resultTitle").textContent=t>=90?"Perfect cocktail! 💗":t>=70?"Ovo obećava 😏":"Zanimljiv eksperiment 😄";
+ $("resultText").textContent=t>=90?"Okej… ovaj koktel zaslužuje da ga probamo uživo. 🍸":t>=70?"Još malo i dobijaš mesto za šankom.":"Možda je sledeći pametnije da napravimo zajedno. 😏";
+ $("recipe").textContent="Tvoj mix: "+chosen.join(" • ");$("result").classList.add("show");say("SHAKE... SHAKE... gotovo! ✨");
+ for(let i=0;i<14;i++)setTimeout(()=>pop(["✨","💗","🍹"][i%3]),i*60);
+}
+function reset(){chosen=[];$("taste").textContent="0%";$("style").textContent="0%";$("chem").textContent="50%";$("liquid").style.height="10%";$("ice").style.opacity=0;$("result").classList.remove("show");render();say("Nova runda — napravi ga po svom ukusu 🍹")}
+function say(t){$("msg").textContent=t}
+function pop(e){let s=document.createElement("span");s.className="float";s.textContent=e;s.style.left=(15+Math.random()*70)+"%";s.style.fontSize=(18+Math.random()*15)+"px";$("fx").appendChild(s);setTimeout(()=>s.remove(),1400)}
+document.querySelectorAll(".drink").forEach(b=>b.onclick=()=>{document.querySelectorAll(".drink").forEach(x=>x.classList.remove("active"));b.classList.add("active");current=b.dataset.d;reset();say(D[current].name+" izabran. Dodaj sastojke 👇")});
+$("mix").onclick=mix;$("reset").onclick=reset;render();
 </script>
 </body></html>
